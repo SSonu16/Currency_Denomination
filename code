@@ -1,0 +1,49 @@
+//Currency Denomination using Greedy Strategy (ATM) 
+
+import java.util.*;
+          public class ATMCurrencyDenomination {
+          // Available denominations (can be customized)
+          private static final List<Integer> denominations = Arrays.asList(
+        2000, 500, 200, 100, 50, 20, 10, 5, 2, 1 );
+
+    // Method to calculate denominations using greedy strategy
+    public static Map<Integer, Integer> calculateDenomination(int amount) {
+        // Ensure denominations are in descending order
+        List<Integer> sortedDenominations = new ArrayList<>(denominations);
+        Collections.sort(sortedDenominations, Collections.reverseOrder());
+
+        Map<Integer, Integer> result = new LinkedHashMap<>();
+
+        for (int note : sortedDenominations) {
+            if (amount >= note) {
+                int count = amount / note;
+                amount -= count * note;
+                result.put(note, count);
+            }
+        }
+  return result}
+
+    // Method to display the denomination result
+    public static void displayResult(Map<Integer, Integer> result) {
+        System.out.println("\nDenomination Breakdown:");
+        for (Map.Entry<Integer, Integer> entry : result.entrySet()) {
+            System.out.println("₹" + entry.getKey() + " x " + entry.getValue());
+        }
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        // Input
+        System.out.print("Enter the amount to withdraw: ₹");
+        int amount = scanner.nextInt();
+
+        if (amount <= 0) {
+            System.out.println("Invalid amount. Please enter a positive value.");
+        } else {
+            Map<Integer, Integer> result = calculateDenomination(amount);
+            displayResult(result);
+        }
+        scanner.close();
+    }
+} 
+
